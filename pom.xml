@@ -8,10 +8,10 @@
 		<version>2.1.9.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>pay</groupId>
-	<artifactId>pay</artifactId>
+	<groupId>kitchen</groupId>
+	<artifactId>kitchen</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pay</name>
+	<name>kitchen</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -55,6 +55,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

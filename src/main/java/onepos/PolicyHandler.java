@@ -4,6 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import onepos.config.kafka.KafkaProcessor;
+import onepos.domain.Paid;
+import onepos.domain.Pay;
+import onepos.domain.PayRepository;
+import onepos.domain.Refunded;
+import onepos.domainkafka.OrderCancelled;
+import onepos.domainkafka.Ordered;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -23,58 +29,33 @@ public class PolicyHandler{
     @Autowired
     PayRepository payRepository;
 
-  //  @StreamListener(KafkaProcessor.INPUT)  //Test . 서빙 완료시 저장되도록 변경
- //   public void whenOrderCreated(@Payload Ordered ordered){
+    @StreamListener(KafkaProcessor.INPUT)  //주문 완료시 저장
+    public void whenOrderCreated(@Payload Ordered ordered){
 
+            System.out.println("##### listener UpdateStatus: " + ordered.getStatus().toString());
 
-             //   System.out.println("##### listener UpdateStatus: " + ordered.getPayStatus());
+            Pay pay = new Pay();
+            pay.setOrderId(ordered.getOrderId());
+            pay.setStoreId(ordered.getStoreId());
+            pay.setAmt(ordered.getOrderItems().getQuantity()); // ??
+            pay.setPrice(ordered.getOrderItems().getQuantity()*ordered.getOrderItems().getPrice());
+            pay.setPayStatus("payRequest");
+            System.out.println("##### listener UpdateStatus : " + ordered.toJson());
+            payRepository.save(pay);
+    }
 
-              //  Pay pay = new Pay();
-              //  pay.setOrderId(ordered.getOrderId()); // MSA 간 전달 파리미터/유형 협의 필요!!!!!!!!!!. Test 를 위해 임의값 대신 저장/
-              //  pay.setStoreId(1111);
-              //  pay.setStoreName(ordered.getStoreName());
+    @StreamListener(KafkaProcessor.INPUT) //손님이 주문취소했을 때
+    public void wheneverOrdered_UpdateStatus(@Payload OrderCancelled orderCancelled){
 
-              //  pay.setPayTool("1234");
-              //  pay.setSaleQty(ordered.getQty());
-              //  System.out.println("##### listener UpdateStatus : " + ordered.toJson());
-              //  payRepository.save(pay);
-
-
- //   }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverOrdered_UpdateStatus(@Payload Ordered ordered){
-
-        if(ordered.isMe()){
-            Optional<Pay> orderOptional = payRepository.findById(ordered.getOrderId());
+        if(orderCancelled.isMe()){
+            Optional<Pay> orderOptional = payRepository.findById(orderCancelled.getId());
             Pay pay = orderOptional.get();
-      //      pay.setPayStatus("paid");
+            pay.setPayStatus("Refuned");
 
             payRepository.save(pay);
-            System.out.println("##### listener UpdateStatus : " + ordered.toJson());
+            System.out.println("##### listener UpdateStatus : " + orderCancelled.toJson());
         }
     }
 
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverPaid_UpdateStatusTest(@Payload Paid paid){
-
-       // if(paid.isMe()){
-      //      System.out.println("##### listener Delivered!!!!!!!!!!### : " + paid.toJson());
-      //  }
-    }
-
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverRefunded_UpdateStatus(@Payload Refunded refunded){
-
-        if(refunded.isMe()){
-           // Optional<Pay> orderOptional = payRepository.findById(refunded.getOrderId());
-          //  Pay order = orderOptional.get();
-          //  order.setPayStatus(refunded.getPayStatus());
-
-            //payRepository.save(order);
-           // System.out.println("##### listener UpdateStatus : " + refunded.toJson());
-        }
-    }
 
 }

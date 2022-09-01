@@ -30,8 +30,8 @@ spring:
       kafka:
         binder:
           #brokers: localhost:29092 #Gitpod
-          #brokers: localhost:9092 #로컬
-          brokers: 3.34.5.164:9092 #EC2 설치 kafka
+          brokers: localhost:9092 #로컬
+          #brokers: 3.34.5.164:9092 #EC2 설치 kafka
         streams:
           binder:
             configuration:
