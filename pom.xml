@@ -8,10 +8,10 @@
 		<version>2.1.9.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>kitchen</groupId>
-	<artifactId>kitchen</artifactId>
+	<groupId>pay</groupId>
+	<artifactId>pay</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kitchen</name>
+	<name>pay</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
