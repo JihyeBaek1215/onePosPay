@@ -34,7 +34,6 @@ public class Refunded extends AbstractEvent {
 
     String payTool; //계산수단
     String payStatus; // 계산결과
-    LocalDateTime payDate; //계산 시간
 
     String cardNum; // 카드번호
     String validNum; // 유효기간
@@ -120,17 +119,6 @@ public class Refunded extends AbstractEvent {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-
-    public LocalDateTime getPayDate() {
-        return payDate;
-    }
-
-    public void setPayDate(LocalDateTime payDate) {
-       //Date now = new Date();
-      // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-       this.payDate = LocalDateTime.now();
     }
 
     public int getAmt() {

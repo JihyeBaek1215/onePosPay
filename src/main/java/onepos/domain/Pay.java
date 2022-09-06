@@ -162,26 +162,6 @@ public class Pay {
     }
 
 
-  //  @PrePersist // 해당 엔티티를 저장하기 이전
- //   public void onPrePersist(){
-  //      try {
-  //          System.out.println("##### Status chk : " + payStatus);
-  //          if ("PayRequest".equals(payStatus)){
-   //             price = qty * amt;
-   //             payStatus = "PaySucess";
-   //         }
-   //         else {
-   //             payStatus = "PayFail";
-   //         }
-
-    //    } catch (Exception e) {
-            //TODO: handle exception
-          ////  String value = "PayFail";
-          //  pay.setPayStatus(value);
-    //    }
-
-   // }
-
 
    @PostPersist @PostUpdate // 해당 엔티티를 저장/수정한 이후
     public void onPatchPersist(){
