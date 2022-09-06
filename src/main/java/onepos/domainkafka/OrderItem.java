@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class OrderItem {
 
     String menuId;
+    String menuNm;
     int quantity;
     int price;
 
@@ -14,6 +15,12 @@ public class OrderItem {
     }
     public void setMenuId(String menuId) {
         this.menuId = menuId;
+    }
+    public String getMenuNm() {
+        return menuNm;
+    }
+    public void setMenuNm(String menuNm) {
+        this.menuNm = menuNm;
     }
     public int getQuantity() {
         return quantity;

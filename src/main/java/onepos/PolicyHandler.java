@@ -37,8 +37,10 @@ public class PolicyHandler{
             Pay pay = new Pay();
             pay.setOrderId(ordered.getOrderId());
             pay.setStoreId(ordered.getStoreId());
-            pay.setAmt(ordered.getOrderItems().getQuantity()); // ??
-            pay.setPrice(ordered.getOrderItems().getQuantity()*ordered.getOrderItems().getPrice());
+            pay.setMenuId(ordered.getOrderItems().getMenuId());
+            pay.setMenuNm(ordered.getOrderItems().getMenuNm());
+            pay.setAmt(ordered.getOrderItems().getPrice());
+            pay.setQty(ordered.getOrderItems().getQuantity());
             pay.setPayStatus("payRequest");
             System.out.println("##### listener UpdateStatus : " + ordered.toJson());
             payRepository.save(pay);

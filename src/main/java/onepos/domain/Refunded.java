@@ -1,42 +1,75 @@
 
 package onepos.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import onepos.AbstractEvent;
 
 public class Refunded extends AbstractEvent {
-
+    int id;
     int orderId; //주문번호
     int tableNum; //테이블 번호
-    int price; //가격
+    int amt; //가격
+    int qty; //수량
     int storeId; //매장ID
+    int price;
+    String menuId;
+    String menuNm;
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getMenuNm() {
+        return menuNm;
+    }
+
+    public void setMenuNm(String menuNm) {
+        this.menuNm = menuNm;
+    }
+
+
     String payTool; //계산수단
     String payStatus; // 계산결과
-    Date payDate; //계산 시간
+    LocalDateTime payDate; //계산 시간
 
-    public int getOrderId() {
-        return orderId;
+    String cardNum; // 카드번호
+    String validNum; // 유효기간
+    String passworld; // 비밀번호 앞 2자리
+
+    public String getCardNum() {
+        return cardNum;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setCardNum(String cardNum) {
+        this.cardNum = cardNum;
     }
 
-    public int getTableNum() {
-        return tableNum;
+    public String getValidNum() {
+        return validNum;
     }
 
-    public void setTableNum(int tableNum) {
-        this.tableNum = tableNum;
+    public void setValidNum(String validNum) {
+        this.validNum = validNum;
     }
 
-    public int getPrice() {
-        return price;
+    public String getPassworld() {
+        return passworld;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPassworld(String passworld) {
+        this.passworld = passworld;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getStoreId() {
@@ -63,12 +96,58 @@ public class Refunded extends AbstractEvent {
         this.payStatus = payStatus;
     }
 
-    public Date getPayDate() {
+
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getTableNum() {
+        return tableNum;
+    }
+
+    public void setTableNum(int tableNum) {
+        this.tableNum = tableNum;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+
+    public LocalDateTime getPayDate() {
         return payDate;
     }
 
-    public void setPayDate(Date payDate) {
-        this.payDate = payDate;
+    public void setPayDate(LocalDateTime payDate) {
+       //Date now = new Date();
+      // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       this.payDate = LocalDateTime.now();
     }
+
+    public int getAmt() {
+        return amt;
+    }
+
+    public void setAmt(int amt) {
+        this.amt = amt;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
 
 }

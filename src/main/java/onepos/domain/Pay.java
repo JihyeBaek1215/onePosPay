@@ -22,22 +22,59 @@ public class Pay {
     int orderId; //주문번호
     int tableNum; //테이블 번호
     int amt; //가격
-    int qty; // 수량
+    int qty; //수량
     int storeId; //매장ID
     int price;
+    String menuId;
+    String menuNm;
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getMenuNm() {
+        return menuNm;
+    }
+
+    public void setMenuNm(String menuNm) {
+        this.menuNm = menuNm;
+    }
+
+
     String payTool; //계산수단
     String payStatus; // 계산결과
     LocalDateTime payDate; //계산 시간
-    //String customerPhoneNumber;
 
+    String cardNum; // 카드번호
+    String validNum; // 유효기간
+    String passworld; // 비밀번호 앞 2자리
 
-   // public String getCustomerPhoneNumber() {
-   //     return customerPhoneNumber;
-   // }
+    public String getCardNum() {
+        return cardNum;
+    }
 
-    //public void setCustomerPhoneNumber(String customerPhoneNumber) {
-    //    this.customerPhoneNumber = customerPhoneNumber;
-   // }
+    public void setCardNum(String cardNum) {
+        this.cardNum = cardNum;
+    }
+
+    public String getValidNum() {
+        return validNum;
+    }
+
+    public void setValidNum(String validNum) {
+        this.validNum = validNum;
+    }
+
+    public String getPassworld() {
+        return passworld;
+    }
+
+    public void setPassworld(String passworld) {
+        this.passworld = passworld;
+    }
 
     public int getId() {
         return id;
@@ -125,29 +162,25 @@ public class Pay {
     }
 
 
-    @PrePersist // 해당 엔티티를 저장하기 이전
-    public void onPrePersist(){
-        try {
-            System.out.println("##### Status chk : " + payStatus);
+  //  @PrePersist // 해당 엔티티를 저장하기 이전
+ //   public void onPrePersist(){
+  //      try {
+  //          System.out.println("##### Status chk : " + payStatus);
+  //          if ("PayRequest".equals(payStatus)){
+   //             price = qty * amt;
+   //             payStatus = "PaySucess";
+   //         }
+   //         else {
+   //             payStatus = "PayFail";
+   //         }
 
-
-            if ("PayRequest".equals(payStatus)){
-                price = qty * amt;
-                //실제 결제 진행하는 로직 구현 필요 (카드 번호 등 필요함)
-                payStatus = "PaySucess";
-            }
-            else {
-                payStatus = "PayFail";
-
-            }
-
-        } catch (Exception e) {
+    //    } catch (Exception e) {
             //TODO: handle exception
           ////  String value = "PayFail";
           //  pay.setPayStatus(value);
-        }
+    //    }
 
-    }
+   // }
 
 
     @PostPersist // 해당 엔티티를 저장한 이후
@@ -158,12 +191,12 @@ public class Pay {
 
         if ("PaySucess".equals(payStatus)){
             Paid paid = new Paid();
-            BeanUtils.copyProperties(this, paid);
+            BeanUtils.copyProperties(this, pay);
             paid.publishAfterCommit(); // 카프카 발행
         }
         if ("PayFail".equals(payStatus)){
             Refunded refunded = new Refunded();
-            BeanUtils.copyProperties(this, refunded);
+            BeanUtils.copyProperties(this, pay);
             refunded.publishAfterCommit(); // 카프카 발행
         }
     }

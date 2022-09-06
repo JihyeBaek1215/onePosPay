@@ -27,7 +27,7 @@ import onepos.service.*;
   PayService payService;
 
 
-  @GetMapping("/heath_check")
+  @GetMapping("/pays/heath_check")
   public String status() {
     return "It's Working in Pay Service"
 ;  }
@@ -67,15 +67,6 @@ import onepos.service.*;
   public void requestRefundStart(@PathVariable("orderId") int orderId){
     payService.requestRefundStart(orderId);
   }
-
-  //포인트 조회
-  //@GetMapping("/points/lists/{phoneNumber}")
-  //public  java.util.Optional<Pay> getPayDetail(@PathVariable("payId") int payId) {
-  //  return payService.getPayDetail(payId);
- // }
-  //포인트 차감
-
-  //포인트 적립
 
 
  }
