@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.esotericsoftware.kryo.util.IntArray;
 
+
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.BeanUtils;
 
@@ -64,7 +65,7 @@ public class Point {
         this.status = status;
     }
 
-    @PostPersist // 해당 엔티티를 저장한 이후
+    @PostPersist @PostUpdate
     public void onPostPersist(){
         Point point = new Point();
         point.setStatus(point.getStatus());

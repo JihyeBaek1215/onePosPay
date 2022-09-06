@@ -183,8 +183,8 @@ public class Pay {
    // }
 
 
-    @PostPersist // 해당 엔티티를 저장한 이후
-    public void onPostPersist(){
+   @PostPersist @PostUpdate // 해당 엔티티를 저장/수정한 이후
+    public void onPatchPersist(){
         Pay pay = new Pay();
         pay.setPayStatus(pay.getPayStatus());
         System.out.println("##### Status chk : " + payStatus);
