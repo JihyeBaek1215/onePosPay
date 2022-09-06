@@ -50,7 +50,7 @@ public class Pay {
 
     String cardNum; // 카드번호
     String validNum; // 유효기간
-    String passworld; // 비밀번호 앞 2자리
+    String password; // 비밀번호 앞 2자리
 
     public String getCardNum() {
         return cardNum;
@@ -68,12 +68,12 @@ public class Pay {
         this.validNum = validNum;
     }
 
-    public String getPassworld() {
-        return passworld;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassworld(String passworld) {
-        this.passworld = passworld;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getId() {

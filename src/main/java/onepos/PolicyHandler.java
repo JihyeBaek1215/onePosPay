@@ -52,7 +52,7 @@ public class PolicyHandler{
         if(orderCancelled.isMe()){
             Optional<Pay> orderOptional = payRepository.findById(orderCancelled.getId());
             Pay pay = orderOptional.get();
-            pay.setPayStatus("Refuned");
+            pay.setPayStatus("RefundRequest");
 
             payRepository.save(pay);
             System.out.println("##### listener UpdateStatus : " + orderCancelled.toJson());

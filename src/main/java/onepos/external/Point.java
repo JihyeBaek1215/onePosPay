@@ -1,21 +1,37 @@
 package onepos.external;
 
-import java.util.Date;
+import javax.persistence.*;
 
+import com.esotericsoftware.kryo.util.IntArray;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.BeanUtils;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
+@Table(name="Point_table")
 public class Point {
 
-    int price;
-    int storeId;
-    String storeNm;
+
+    @Id //@GeneratedValue(generator="system-uuid")    //@GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name = "customer_phone_number")
     String customerPhoneNumber;
-    Date sysDate;
+    int price;
+    double point;
+    int storeId;
+    LocalDateTime sysDate;
     String status;
 
-    public String getStatus() {
-        return status;
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
     }
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
     }
     public int getPrice() {
         return price;
@@ -23,33 +39,45 @@ public class Point {
     public void setPrice(int price) {
         this.price = price;
     }
+    public double getPoint() {
+        return point;
+    }
+    public void setPoint(double point) {
+        this.point = point;
+    }
     public int getStoreId() {
         return storeId;
     }
     public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
-    public String getStoreNm() {
-        return storeNm;
-    }
-    public void setStoreNm(String storeNm) {
-        this.storeNm = storeNm;
-    }
-    public String getCustomerPhoneNumber() {
-        return customerPhoneNumber;
-    }
-    public void setCustomerPhoneNumber(String customerPhoneNumber) {
-        this.customerPhoneNumber = customerPhoneNumber;
-    }
-    public Date getSysDate() {
+    public LocalDateTime getSysDate() {
         return sysDate;
     }
-    public void setSysDate(Date sysDate) {
+    public void setSysDate(LocalDateTime sysDate) {
         this.sysDate = sysDate;
     }
-    public void setstatus(String string) {
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
+    @PostPersist // 해당 엔티티를 저장한 이후
+    public void onPostPersist(){
+        Point point = new Point();
+        point.setStatus(point.getStatus());
+        System.out.println("##### Status chk : " + point.getStatus());
+
+        if ("PointUseSucess".equals(point.getStatus())
+          ||"PointUseFail-Not Enough Point".equals(point.getStatus())
+          ||"PointUseFail".equals(point.getStatus())){
+            PointUsed pointUsed = new PointUsed();
+            BeanUtils.copyProperties(this, point);
+            pointUsed.publishAfterCommit(); // 카프카 발행
+        }
+    }
 
 
 }

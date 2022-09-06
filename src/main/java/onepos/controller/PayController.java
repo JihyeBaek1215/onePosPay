@@ -51,11 +51,6 @@ import onepos.service.*;
     return payService.getPayDetail(orderId);
   }
 
-  @DeleteMapping("/pays/{orderId}")
-  public String getPayDetail(){
-      return "msg is deleted!";
-  }
-
   //계산 진행
   @PatchMapping("/pays/{orderId}")
   public void requestPayStart(@PathVariable("orderId") int orderId){
@@ -63,7 +58,7 @@ import onepos.service.*;
   }
 
   //환불 진행
-  @PatchMapping("/pays/refund/{payId}")
+  @PatchMapping("/pays/refund/{orderId}")
   public void requestRefundStart(@PathVariable("orderId") int orderId){
     payService.requestRefundStart(orderId);
   }
