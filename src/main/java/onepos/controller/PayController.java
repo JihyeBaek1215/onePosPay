@@ -29,7 +29,7 @@ import onepos.service.*;
 
   @GetMapping("/pays/heath_check")
   public String status() {
-    return "It's Working in Pay Service"
+    return "ver2 It's Working in Pay Service"
 ;  }
 
 
