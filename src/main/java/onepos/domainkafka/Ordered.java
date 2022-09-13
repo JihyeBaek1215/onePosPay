@@ -13,10 +13,10 @@ public class Ordered  extends AbstractEvent {
   String status;
   OrderItem orderItems = new OrderItem();
 
-  public int getOrderId() {
+  public int getId() {
     return id;
   }
-  public void setOrderId(int id) {
+  public void setId(int id) {
     this.id = id;
   }
   public int getTableNum() {

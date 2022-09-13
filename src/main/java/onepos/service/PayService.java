@@ -28,12 +28,12 @@ public class PayService {
   @Transactional(readOnly = true) // 변경감지 자체를 수행안한다. select하는곳에는 다 붙혀줘야함
 	public Optional<Pay> getPayDetail(int orderId) {
 
-    return payRepository.findById(orderId);
+    return payRepository.findByOrderId(orderId);
 	}
 
   //계산 진행
  public void requestPayStart(int orderId) {
-   Optional<Pay> optional = payRepository.findById(orderId);
+   Optional<Pay> optional = payRepository.findByOrderId(orderId);
    Pay pay = optional.get();
 
    try {
@@ -49,7 +49,7 @@ public class PayService {
  }
   //환불 진행
   public void requestRefundStart(int orderId) {
-    Optional<Pay> optional = payRepository.findById(orderId);
+    Optional<Pay> optional = payRepository.findByOrderId(orderId);
     Pay pay = optional.get();
     pay.setPayStatus("RefundRequest"); //ENUM으로 변경
     payRepository.save(pay);

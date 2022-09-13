@@ -35,7 +35,7 @@ public class PolicyHandler{
             System.out.println("##### listener UpdateStatus: " + ordered.getStatus().toString());
 
             Pay pay = new Pay();
-            pay.setOrderId(ordered.getOrderId());
+            pay.setOrderId(ordered.getId());
             pay.setStoreId(ordered.getStoreId());
             pay.setMenuId(ordered.getOrderItems().getMenuId());
             pay.setMenuNm(ordered.getOrderItems().getMenuNm());
@@ -50,7 +50,7 @@ public class PolicyHandler{
     public void wheneverOrdered_UpdateStatus(@Payload OrderCancelled orderCancelled){
 
         if(orderCancelled.isMe()){
-            Optional<Pay> orderOptional = payRepository.findById(orderCancelled.getId());
+            Optional<Pay> orderOptional = payRepository.findByOrderId(orderCancelled.getId());
             Pay pay = orderOptional.get();
             pay.setPayStatus("RefundRequest");
 
