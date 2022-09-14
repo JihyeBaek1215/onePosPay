@@ -49,8 +49,9 @@ public class PayService {
  }
   //환불 진행
   public void requestRefundStart(int id) {
-    Optional<Pay> optional = payRepository.findById(id);
+    Optional<Pay> optional = payRepository.findByOrderId(id);
     Pay pay = optional.get();
+    System.out.println("pay : "+pay.getId());
    // pay.setPayStatus("RefundRequest"); //ENUM으로 변경
    // payRepository.save(pay);
 
@@ -64,18 +65,6 @@ public class PayService {
     payRepository.save(pay);
 
   }
-
-    //환불 진행
-    public void requestRefundStart_new(Pay paid) {
-      Optional<Pay> optional = payRepository.findById(paid.getId());
-      Pay newPay = optional.get();
-
-      newPay.setPayStatus("RefundSucess");
-
-      payRepository.save(paid);
-
-    }
-
 
 
 }
