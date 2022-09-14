@@ -174,13 +174,13 @@ public class Pay {
             BeanUtils.copyProperties(this, paid);
             paid.publishAfterCommit(); // 카프카 발행
         }
-        if ("PayFail".equals(payStatus)){
+        if ("PayFail".equals(payStatus) || "RefundSucess".equals(payStatus)){
             Refunded refunded = new Refunded();
             BeanUtils.copyProperties(this, refunded);
             refunded.publishAfterCommit(); // 카프카 발행
         }
-    }
 
+    }
 
 
 }
