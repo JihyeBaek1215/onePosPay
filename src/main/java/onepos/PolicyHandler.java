@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Optional;
 
+import onepos.service.*;
+
 @Service
 public class PolicyHandler{
     @StreamListener(KafkaProcessor.INPUT)
@@ -64,6 +66,11 @@ public class PolicyHandler{
             pay.setPayStatus("RefundRequest");
 
             payRepository.save(pay);
+
+            PayService service = new PayService();
+
+            service.requestRefundStart(pay.getId());
+
             System.out.println("##### listener UpdateStatus : " + orderCancelled.toJson());
 
     }

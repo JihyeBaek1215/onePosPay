@@ -48,11 +48,11 @@ public class PayService {
    payRepository.save(pay);
  }
   //환불 진행
-  public void requestRefundStart(int orderId) {
-    Optional<Pay> optional = payRepository.findByOrderId(orderId);
+  public void requestRefundStart(int id) {
+    Optional<Pay> optional = payRepository.findById(id);
     Pay pay = optional.get();
-    pay.setPayStatus("RefundRequest"); //ENUM으로 변경
-    payRepository.save(pay);
+   // pay.setPayStatus("RefundRequest"); //ENUM으로 변경
+   // payRepository.save(pay);
 
     try {
       Thread.sleep(10000);
