@@ -49,14 +49,17 @@ public class PolicyHandler{
     @StreamListener(KafkaProcessor.INPUT) //손님이 주문취소했을 때
     public void wheneverOrdered_UpdateStatus(@Payload OrderCancelled orderCancelled){
 
-        if(orderCancelled.isMe()){
             Optional<Pay> orderOptional = payRepository.findByOrderId(orderCancelled.getId());
-            Pay pay = orderOptional.get();
+            Pay new_pay = orderOptional.get(); // 주문 취소할 정보를 담는다
+
+            Optional<Pay> old_pay = payRepository.findById(new_pay.getId()); // 기존 주문 정보를 주문 id로 찾는다
+            Pay pay = old_pay.get(); // 결제 취소할 정보를 담는다
+
             pay.setPayStatus("RefundRequest");
 
             payRepository.save(pay);
             System.out.println("##### listener UpdateStatus : " + orderCancelled.toJson());
-        }
+
     }
 
 

@@ -8,5 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface PayRepository extends PagingAndSortingRepository<Pay, Integer>{
 
 	Optional<Pay> findByOrderId(Integer orderId);
+
+	Optional<Pay> findById(Integer Id);
 }
 
