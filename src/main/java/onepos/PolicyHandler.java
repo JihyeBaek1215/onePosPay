@@ -34,16 +34,22 @@ public class PolicyHandler{
 
             System.out.println("##### listener UpdateStatus: " + ordered.getStatus().toString());
 
-            Pay pay = new Pay();
-            pay.setOrderId(ordered.getId());
-            pay.setStoreId(ordered.getStoreId());
-            pay.setMenuId(ordered.getOrderItems().getMenuId());
-            pay.setMenuNm(ordered.getOrderItems().getMenuNm());
-            pay.setAmt(ordered.getOrderItems().getPrice());
-            pay.setQty(ordered.getOrderItems().getQuantity());
-            pay.setPayStatus("payRequest");
-            System.out.println("##### listener UpdateStatus : " + ordered.toJson());
-            payRepository.save(pay);
+            Optional<Pay> optional = payRepository.findByOrderId(ordered.getId());
+
+            if(!optional.isPresent()) // 기존 주문번호가 존재하지 않을 때만 insert
+            {
+                Pay pay = new Pay();
+                pay.setOrderId(ordered.getId());
+                pay.setStoreId(ordered.getStoreId());
+                pay.setMenuId(ordered.getOrderItems().getMenuId());
+                pay.setMenuNm(ordered.getOrderItems().getMenuNm());
+                pay.setAmt(ordered.getOrderItems().getPrice());
+                pay.setQty(ordered.getOrderItems().getQuantity());
+                pay.setPayStatus("payRequest");
+                System.out.println("##### listener UpdateStatus : " + ordered.toJson());
+                payRepository.save(pay);
+            }
+
     }
 
     @StreamListener(KafkaProcessor.INPUT) //손님이 주문취소했을 때
