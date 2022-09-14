@@ -65,11 +65,9 @@ public class PolicyHandler{
 
             pay.setPayStatus("RefundRequest");
 
-            payRepository.save(pay);
-
             PayService service = new PayService();
 
-            service.requestRefundStart(pay.getId());
+            service.requestRefundStart_new(pay);
 
             System.out.println("##### listener UpdateStatus : " + orderCancelled.toJson());
 

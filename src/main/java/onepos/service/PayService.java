@@ -65,5 +65,17 @@ public class PayService {
 
   }
 
+    //환불 진행
+    public void requestRefundStart_new(Pay paid) {
+      Optional<Pay> optional = payRepository.findById(paid.getId());
+      Pay newPay = optional.get();
+
+      newPay.setPayStatus("RefundSucess");
+
+      payRepository.save(paid);
+
+    }
+
+
 
 }
